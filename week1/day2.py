@@ -9,4 +9,5 @@ def count_words(text):
     return result
 
 # проверка
-print(count_words("кот сидит на окне кот смотрит в окно"))
+if __name__ == "__main__":
+    print(count_words("кот сидит на окне кот смотрит в окно"))
