@@ -1,6 +1,24 @@
 import requests
 import sqlite3
 
+# --- 0. ИНИЦИАЛИЗАЦИЯ БАЗЫ (чтобы не было ошибок) ---
+def init_db():
+    conn = sqlite3.connect('astra_memory.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            role TEXT NOT NULL,
+            content TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Вызываем её сразу при старте
+init_db()
+
 # --- 1. ФУНКЦИЯ ДЛЯ OLLAMA ---
 def ask_ollama(prompt, model_name="qwen3:8b"):
     url = "http://localhost:11434/api/generate"
